@@ -148,7 +148,7 @@
             unityInstance.SendMessage("UserID", "ReceiveUserID", userID);
           } else {
             console.error("Telegram WebApp is not available.");
-			unityInstance.SendMessage("UserID", "ReceiveUserID", "UnknownUser");
+			unityInstance.SendMessage("UserID", "ReceiveUserID", "NoTelegramUser");
           }
         }).catch((message) => {
           alert(message);
