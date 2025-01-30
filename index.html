@@ -140,17 +140,21 @@
           };
 
           // Telegram Integration
-          if (window.Telegram && Telegram.WebApp) {
-            Telegram.WebApp.ready();
-            const initData = Telegram.WebApp.initDataUnsafe;
-            const userID = initData?.user?.id || "UnknownUser";
+          window.addEventListener("DOMContentLoaded", function () {
+    if (typeof Telegram !== "undefined" && Telegram.WebApp) {
+        Telegram.WebApp.ready(); // Ensures Telegram WebApp is initialized
+        const initData = Telegram.WebApp.initDataUnsafe;
+        const userID = initData?.user?.id || "UnknownUser";
 
-            // Pass the userID to Unity
-            unityInstance.SendMessage("UserID", "ReceiveUserID", userID);
-          } else {
-            console.error("Telegram WebApp is not available.");
-			unityInstance.SendMessage("UserID", "ReceiveUserID", "NoTelegramUser");
-          }
+        console.log("User ID:", userID); // Debugging
+
+        // Pass the userID to Unity
+        unityInstance.SendMessage("UserID", "ReceiveUserID", userID);
+    } else {
+        console.error("Telegram WebApp is not available.");
+        unityInstance.SendMessage("UserID", "ReceiveUserID", "NoTelegramUser");
+    }
+});
         }).catch((message) => {
           alert(message);
         });
