@@ -26,8 +26,7 @@
 	
 	<script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore-compat.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script> 
+    <script>
 
 		// Initialize Firebase
         const firebaseConfig = {
@@ -140,21 +139,11 @@
           };
 
           // Telegram Integration
-          window.addEventListener("DOMContentLoaded", function () {
-    if (typeof Telegram !== "undefined" && Telegram.WebApp) {
-        Telegram.WebApp.ready(); // Ensures Telegram WebApp is initialized
-        const initData = Telegram.WebApp.initDataUnsafe;
-        const userID = initData?.user?.id || "UnknownUser";
-
-        console.log("User ID:", userID); // Debugging
-
-        // Pass the userID to Unity
-        unityInstance.SendMessage("UserID", "ReceiveUserID", userID);
-    } else {
-        console.error("Telegram WebApp is not available.");
-        unityInstance.SendMessage("UserID", "ReceiveUserID", "NoTelegramUser");
-    }
-});
+           const urlParams=new URLSearchParams(window.location.search);
+           const userID = urlParams.get("userID") || "UnknownUser";
+            // Pass the userID to Unity
+            unityInstance.SendMessage("UserID", "ReceiveUserID", userID);
+            
         }).catch((message) => {
           alert(message);
         });
